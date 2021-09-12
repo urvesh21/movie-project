@@ -1,1 +1,36 @@
-<p>It works</p>
+<mat-toolbar color="primary">
+  <span>The Movie DB</span>
+</mat-toolbar>
+
+<main class="movieDB">
+  <section class="movieDB-search">
+    <input class="movieDB-search-input" type="text" placeholder="Search Movie" #searchInput />
+  </section>
+  <section class="movieDB-container" *ngIf="movies$ | async as movieCollection; else loadingOrError">
+      <ng-container *ngIf="movieCollection.length">
+          <ul class="movieDB-collection">
+            <li tabindex="0" class="movieDB-collection__list" *ngFor="let movie of movieCollection; let i=index" (click)="openDialog(movie)">  
+              <img [src]="movie.icon" [alt]="movie.title" />
+              <p>{{ movie.title }}</p>
+            </li>
+          </ul>
+      
+          <mat-paginator
+            [length]="totalPages"
+            [pageIndex]="currentPage - 1"
+            [pageSize]="pageSize"
+            (page)="updatePage($event)"
+            aria-label="Select page"
+          >
+          </mat-paginator>
+      </ng-container>
+  </section>
+  <ng-template #loadingOrError>
+    <div *ngIf="loadingError$ | async; else loading">
+      Error loading the data. Please try again later.
+    </div>
+    <ng-template #loading>
+      Loading movies...
+    </ng-template>
+  </ng-template>
+</main>

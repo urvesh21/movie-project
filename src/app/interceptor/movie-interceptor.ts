@@ -15,6 +15,14 @@ export class MovieInterceptor implements HttpInterceptor {
     httpRequest: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
+    if (httpRequest.url.includes('configuration')) {
+      return next.handle(
+        httpRequest.clone({
+          params: httpRequest.params
+            .set('api_key', environment.apiKey)
+        })
+      );
+    }
     return next.handle(
       httpRequest.clone({
         params: httpRequest.params
