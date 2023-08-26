@@ -1,27 +1,47 @@
-# MovieProject
+# MovieDB Angular App
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.5.
+This is a movie browsing web application built using Angular 12 that allows users to explore a list of movies, search for specific movies, and view detailed information about each movie. The app utilizes the MovieDB API for fetching movie data.
 
-## Development server
+## Features
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+- Pagination: Display movies in a paginated manner for better user experience.
+- Search: Users can search for movies by title, genre, or any relevant keyword.
+- Movie Details: Clicking on a movie from the list displays detailed information about the selected movie.
+- Responsive: The app is designed to work smoothly on various screen sizes.
 
-## Code scaffolding
+## Demo
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Check out the live demo of the app hosted on GitHub Pages: [MovieDB Angular App Demo](https://urvesh21.github.io/movie-project/)
 
-## Build
+## Installation
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+1. Clone the repository: `git clone git@github.com:urvesh21/movie-project.git`
+2. Navigate to the project directory: `cd movie-project`
+3. Install dependencies: `npm install`
 
-## Running unit tests
+## Usage
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+1. Obtain an API key from [MovieDB](https://www.themoviedb.org/documentation/api) and replace `YOUR_API_KEY` in the `environment.ts` file.
+2. Run the app: `ng serve`
+3. Open your web browser and visit `http://localhost:4200` to see the app in action.
 
-## Running end-to-end tests
+## Screenshots
+<img width="710" alt="image" src="https://github.com/urvesh21/movie-project/assets/12431526/f27f4332-f4f4-4e13-8405-e8f9538ee24f">
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+<img width="940" alt="image" src="https://github.com/urvesh21/movie-project/assets/12431526/9a42fed5-3213-4837-ae2c-22a7da311c99">
 
-## Further help
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Technologies Used
+
+- Angular 12
+- MovieDB API
+- HTML/CSS
+- ...
+
+## Acknowledgments
+
+- Special thanks to [MovieDB](https://www.themoviedb.org/) for providing the API.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
