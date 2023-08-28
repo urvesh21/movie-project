@@ -1,10 +1,11 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Config, MovieDetails, MovieList } from 'src/app/interfaces/interface';
 import { MovieDbService } from '../../services/movie-db.service';
 import { debounceTime, distinctUntilChanged, map, tap } from 'rxjs/operators';
 import { fromEvent, Observable, of, Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalComponent } from '../modal/modal.component';
+import { ViewportRuler } from '@angular/cdk/scrolling';
 
 @Component({
   selector: 'app-movie-home',
@@ -24,9 +25,14 @@ export class MovieHomeComponent implements OnInit, AfterViewInit, OnDestroy {
   loadingError$: Observable<string>;
   configSub$: Subscription = new Subscription();
   movieDetailSub$: Subscription = new Subscription();
+  // @ts-ignore
+  width: number;
+  private readonly viewportChange$ = this.viewportRuler.change(200).subscribe(() => this.ngZone.run(() => this.setSize()));
 
-  constructor(private movieDB: MovieDbService, public dialog: MatDialog) {
+  constructor(private movieDB: MovieDbService, public dialog: MatDialog,private readonly viewportRuler: ViewportRuler,
+    private readonly ngZone: NgZone) {
     this.loadingError$ = this.movieDB.loadingError.asObservable();
+    this.setSize();
   }
 
   ngOnInit() {
@@ -85,14 +91,20 @@ export class MovieHomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.movieDetailSub$ = this.movieDB.getMovieDetails(movie.id).subscribe((data: [MovieDetails, string]) => {
       const [movieDetails, trailer] = data;
       this.dialog.open(ModalComponent, {
-        width: '50%',
+        width: this.width < 1000 ? '80vw' : '50%',
         data: {movieDetails: movieDetails, image: this.baseImgUrl,video: `https://www.youtube.com/embed/${trailer}?&autoplay=1` }
       });
     });
   }
 
+  private setSize() {
+    const { width, height } = this.viewportRuler.getViewportSize();
+    this.width = width;
+  }
+
   ngOnDestroy() {
     this.configSub$.unsubscribe();
     this.movieDetailSub$.unsubscribe();
+    this.viewportChange$.unsubscribe();
   }
 }
