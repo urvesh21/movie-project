@@ -3,7 +3,7 @@ import { Config, MovieDetails, MovieList } from 'src/app/interfaces/interface';
 import { MovieDbService } from '../../services/movie-db.service';
 import { debounceTime, distinctUntilChanged, map, tap } from 'rxjs/operators';
 import { fromEvent, Observable, of, Subscription } from 'rxjs';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { ModalComponent } from '../modal/modal.component';
 import { ViewportRuler } from '@angular/cdk/scrolling';
 
