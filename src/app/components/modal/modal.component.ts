@@ -2,8 +2,8 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Dialog, DialogRef, DIALOG_DATA, DialogModule } from '@angular/cdk/dialog';
 import { Observable } from 'rxjs';
-import { MovieDbService } from 'src/app/services/movie-db.service';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { MovieDbService } from '../../services/movie-db.service';
 
 @Component({
   selector: 'app-modal',

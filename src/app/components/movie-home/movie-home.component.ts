@@ -1,5 +1,4 @@
 import { AfterViewInit, Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Config, MovieDetails, MovieList } from 'src/app/interfaces/interface';
 import { MovieDbService } from '../../services/movie-db.service';
 import { debounceTime, distinctUntilChanged, map, tap } from 'rxjs/operators';
 import { fromEvent, Observable, of, Subscription } from 'rxjs';
@@ -9,6 +8,7 @@ import { Dialog, DialogModule } from '@angular/cdk/dialog';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { Config, MovieDetails, MovieList } from '../../interfaces/interface';
 
 @Component({
   selector: 'app-movie-home',
@@ -101,6 +101,7 @@ export class MovieHomeComponent implements OnInit, AfterViewInit, OnDestroy {
       const [movieDetails, trailer] = data;
       this.dialog.open(ModalComponent, {
         width: this.width < 1000 ? '80vw' : '50%',
+        height: '90%',
         data: { movieDetails: movieDetails, image: this.baseImgUrl, video: `https://www.youtube.com/embed/${trailer}?&autoplay=1` },
       });
     });
