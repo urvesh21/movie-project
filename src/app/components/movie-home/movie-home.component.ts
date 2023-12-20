@@ -6,11 +6,22 @@ import { fromEvent, Observable, of, Subscription } from 'rxjs';
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { ModalComponent } from '../modal/modal.component';
 import { ViewportRuler } from '@angular/cdk/scrolling';
+import { MatLegacyPaginatorModule } from '@angular/material/legacy-paginator';
+import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @Component({
-  selector: 'app-movie-home',
-  templateUrl: './movie-home.component.html',
-  styleUrls: ['./movie-home.component.scss'],
+    selector: 'app-movie-home',
+    templateUrl: './movie-home.component.html',
+    styleUrls: ['./movie-home.component.scss'],
+    standalone: true,
+    imports: [
+        MatToolbarModule,
+        NgIf,
+        NgFor,
+        MatLegacyPaginatorModule,
+        AsyncPipe,
+    ],
 })
 export class MovieHomeComponent implements OnInit, AfterViewInit, OnDestroy {
   baseImgUrl: string = '';
