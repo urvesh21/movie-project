@@ -3,14 +3,19 @@ import { Config, MovieDetails, MovieList } from 'src/app/interfaces/interface';
 import { MovieDbService } from '../../services/movie-db.service';
 import { debounceTime, distinctUntilChanged, map, tap } from 'rxjs/operators';
 import { fromEvent, Observable, of, Subscription } from 'rxjs';
-import { MatDialog } from '@angular/material/dialog';
 import { ModalComponent } from '../modal/modal.component';
 import { ViewportRuler } from '@angular/cdk/scrolling';
+import { Dialog, DialogModule } from '@angular/cdk/dialog';
+import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-movie-home',
   templateUrl: './movie-home.component.html',
   styleUrls: ['./movie-home.component.scss'],
+  standalone: true,
+  imports: [MatToolbarModule, NgIf, NgFor, AsyncPipe, DialogModule, MatPaginatorModule],
 })
 export class MovieHomeComponent implements OnInit, AfterViewInit, OnDestroy {
   baseImgUrl: string = '';
@@ -29,8 +34,12 @@ export class MovieHomeComponent implements OnInit, AfterViewInit, OnDestroy {
   width: number;
   private readonly viewportChange$ = this.viewportRuler.change(200).subscribe(() => this.ngZone.run(() => this.setSize()));
 
-  constructor(private movieDB: MovieDbService, public dialog: MatDialog,private readonly viewportRuler: ViewportRuler,
-    private readonly ngZone: NgZone) {
+  constructor(
+    private movieDB: MovieDbService,
+    public dialog: Dialog,
+    private readonly viewportRuler: ViewportRuler,
+    private readonly ngZone: NgZone
+  ) {
     this.loadingError$ = this.movieDB.loadingError.asObservable();
     this.setSize();
   }
@@ -92,7 +101,7 @@ export class MovieHomeComponent implements OnInit, AfterViewInit, OnDestroy {
       const [movieDetails, trailer] = data;
       this.dialog.open(ModalComponent, {
         width: this.width < 1000 ? '80vw' : '50%',
-        data: {movieDetails: movieDetails, image: this.baseImgUrl,video: `https://www.youtube.com/embed/${trailer}?&autoplay=1` }
+        data: { movieDetails: movieDetails, image: this.baseImgUrl, video: `https://www.youtube.com/embed/${trailer}?&autoplay=1` },
       });
     });
   }

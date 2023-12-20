@@ -1,7 +1,8 @@
-<ng-container *ngIf="data.movieDetails; else errorContainer">
-    <h1 mat-dialog-title>{{ data.movieDetails.title }}</h1>
+<div class="movie-info" *ngIf="data.movieDetails; else errorContainer">
+  <button class="modal-close" (click)="closeModal()">X</button>
+    <h1>{{ data.movieDetails.title }}</h1>
     <p>{{ data.movieDetails.tagline }}</p>
-    <div mat-dialog-content>
+    <div>
       <img *ngIf="!playVideo" class="modal-img" src="{{ data.image }}/w780{{ data.movieDetails.backdrop_path }}" [alt]="data.movieDetails.title" />
       <iframe
       *ngIf="playVideo"
@@ -31,7 +32,7 @@
         </span>
       </p>
     </div>
-</ng-container>
+</div>
 <ng-template #errorContainer>
     <div *ngIf="loadingError$ | async">
       Error loading the data. Please try again later.
